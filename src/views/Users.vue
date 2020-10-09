@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import UserTable from "@/components/UserTable.vue";
-import { reactive, ref } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import useUsers from "../modules/useUsers";
 
 export default {
@@ -32,22 +32,16 @@ export default {
       name: "",
       age: 0,
       email: ""
-    })
+    });
 
-    function addNewUser() {
-      addUser(user.name, user.age, user.email)
-      console.log(users)
-    }
-
-    function deleteUser(id: number) {
-      console.log(id);
+    async function addNewUser() {
+      await addUser(user.name, user.age, user.email);
     }
 
     return {
       user,
-      users,
-      addNewUser,
-      deleteUser
+      users: computed(() => users.value),
+      addNewUser
     };
   }
 };

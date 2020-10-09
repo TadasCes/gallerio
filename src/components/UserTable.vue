@@ -26,7 +26,6 @@
         v-for="user in users"
         :key="user.name"
         :user="user"
-        @delete-user="deleteUser"
       ></UserRow>
     </tbody>
   </table>
@@ -47,10 +46,7 @@ export default {
     }
   },
   setup(props: any, { emit }: any) {
-    function deleteUser(value: any) {
-      console.log("alio");
-      console.log(value);
-    }
+
 
 
     return {  };
