@@ -36,6 +36,7 @@ export default {
 
     function addNewUser() {
       addUser(user.name, user.age, user.email)
+      console.log(users)
     }
 
     function deleteUser(id: number) {
@@ -43,6 +44,7 @@ export default {
     }
 
     return {
+      user,
       users,
       addNewUser,
       deleteUser

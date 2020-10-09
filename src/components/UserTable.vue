@@ -42,17 +42,18 @@ export default {
   },
   props: {
     users: {
-      type: String,
+      type: Array,
+      required: true
     }
   },
-  setup(props, { emit }) {
-    function showUsers() {
-      console.log(props.users);
+  setup(props: any, { emit }: any) {
+    function deleteUser(value: any) {
+      console.log("alio");
+      console.log(value);
     }
 
-    return {
 
-      };
+    return {  };
   }
 };
 </script>
