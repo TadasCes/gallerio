@@ -7,7 +7,7 @@
       <input v-model="user.email" name="userEmail" />
       <button>Create new user</button>
     </form>
-    <UserTable :users="users"> </UserTable>
+    <UserTable :users="users" @delete-user="deleteUserFromList"> </UserTable>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
     UserTable
   },
   setup() {
-    const { users, addUser } = useUsers();
+    const { users, addUser, deleteUser } = useUsers();
     const user = reactive({
       name: "",
       age: 0,
@@ -38,10 +38,15 @@ export default {
       await addUser(user.name, user.age, user.email);
     }
 
+    async function deleteUserFromList(id: number) {
+      await deleteUser(id)
+    }
+
     return {
       user,
       users: computed(() => users.value),
-      addNewUser
+      addNewUser,
+      deleteUserFromList
     };
   }
 };

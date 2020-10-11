@@ -5,25 +5,23 @@
     <td>{{ user.age }}</td>
     <td>{{ user.email }}</td>
     <td class="w-25">
-      <button @click="deleteUserFromList" class="btn btn-outline-danger">Delete</button>
+      <button @click="deleteUser" class="btn btn-outline-danger">Delete</button>
     </td>
   </tr>
 </template>
 
 <script lang="ts">
-import useUsers from "../modules/useUsers";
+import Users from "../views/Users.vue";
 import { watch } from "vue";
 
 export default {
+  emits: ["delete-user"],
   props: ["user"],
   setup(props: any, { emit }: any) {
-    const { deleteUser } = useUsers();
-
-    async function deleteUserFromList() {
-      await deleteUser(props.user.id);
+    function deleteUser() {
+      emit("delete-user", props.user.id);
     }
-
-    return { deleteUserFromList };
+    return { deleteUser };
   }
 };
 </script>
