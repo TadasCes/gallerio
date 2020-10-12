@@ -7,14 +7,13 @@
       <input v-model="user.email" name="userEmail" />
       <button>Create new user</button>
     </form>
+    <router-link to="/user-register">Add new user</router-link>
+
     <UserTable :users="users" @delete-user="deleteUserFromList"> </UserTable>
   </div>
 </template>
 
 <style scoped>
-#table-id {
-  width: 5%;
-}
 </style>
 
 <script lang="ts">

@@ -39,14 +39,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  ComputedRef,
-  onMounted,
-  Ref,
-  ref,
-  watch
-} from "vue";
+import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
 import UserRow from "./UserRow.vue";
 import useUsersTable from "@/modules/useUsersTable";
 import { IUser } from "../models/IUser";
@@ -77,11 +70,10 @@ export default {
     const isSearching = () => {
       return searchString.value !== "" ? true : false;
     };
+    
     watch(userList.value, () => {
       displayedList.value = userList.value;
     });
-
-
 
     function sortByName() {
       displayedList = useSortByName(displayedList);
@@ -99,8 +91,8 @@ export default {
 
     function deleteUser(id: number) {
       emit("delete-user", id);
-      alert("User deleted")
-      searchString.value = ""
+      alert("User deleted");
+      searchString.value = "";
     }
 
     onMounted(() => {
