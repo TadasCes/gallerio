@@ -1,7 +1,17 @@
 <template>
   <div class="input-box">
     <label for="address" class="label-bold">Address</label>
-    <input v-model="address" name="address" class="input-field border-rounded bg-light-gray" />
+    <input
+      v-model="input"
+      name="address"
+      class="input-field border-rounded bg-light-gray"
+    />
+    <div v-if="errors.length <= 0">
+      <span class="error-message"></span>
+    </div>
+    <div v-else style="padding: 0 0.5em">
+      <span v-for="error in errors" :key="error" class="error-message">{{ error }}</span>
+    </div>
   </div>
 </template>
 
@@ -10,14 +20,25 @@
 </style>
 
 <script lang="ts">
-import { computed, reactive, ref, watch } from "vue";
+import useInputValidator from "../../modules/useInputValidator";
+import { minLength, maxLength, required } from "@/validators";
+import { ref } from "vue";
 
 export default {
-  setup() {
-    const address = ref("");
+  emits: ["input"],
+  props: {
+    value: String
+  },
+  setup(props: any, { emit }: any) {
+    const { input, errors } = useInputValidator(
+      props.value,
+      [minLength(3), maxLength(50), required()],
+      (value: string) => emit("input", value)
+    );
 
     return {
-      address
+      input,
+      errors
     };
   }
 };

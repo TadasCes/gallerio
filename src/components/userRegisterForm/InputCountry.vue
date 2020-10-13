@@ -2,6 +2,7 @@
   <div class="input-box">
     <label for="country" class="label-bold">Country</label>
     <select name="country" class="input-field border-rounded bg-light-gray" >
+        <option selected="selected" disabled>- Select a country -</option>
       <option v-for="country in countryList" :key="country.code" :value="country.code">
         {{country.name}}
       </option>

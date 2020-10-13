@@ -2,8 +2,13 @@
   <div class="input-box">
     <label for="name" class="label-bold">Name</label>
     <input v-model="input" class="input-field border-rounded bg-light-gray" name="name" />
+    <div v-if="errors.length <= 0">
+      <span class="error-message"></span>
+    </div>
+    <div v-else style="padding: 0 0.5em">
+      <span v-for="error in errors" :key="error" class="error-message">{{ error }}</span>
+    </div>
   </div>
-  <div>{{errors.value}}</div>
 </template>
 
 <style scoped>
@@ -12,19 +17,20 @@
 
 <script lang="ts">
 import useInputValidator from "../../modules/useInputValidator";
-import { minLength } from "@/validators"
+import { minLength, maxLength, required } from "@/validators";
+import { ref } from "vue";
 
 export default {
   emits: ["input"],
   props: {
     value: String
   },
-  setup(props: any, { emit }: any) {  
+  setup(props: any, { emit }: any) {
     const { input, errors } = useInputValidator(
       props.value,
-      [ minLength(3) ],
-			(value: string) => emit("input", value)
-    )
+      [minLength(3), maxLength(50), required()],
+      (value: string) => emit("input", value)
+    );
 
     return {
       input,
