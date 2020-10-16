@@ -12,12 +12,12 @@
 </template>
 
 <style scoped>
-@import "input-style.css";
+
 </style>
 
 <script lang="ts">
 import { computed, onMounted, reactive, Ref, ref, watch } from "vue";
-import countries from "./countries.json"
+import countries from "@/assets/countries.json"
 
 export default {
   setup() {

@@ -1,11 +1,7 @@
 <template>
   <div class="input-box">
-    <label for="zipCode" class="label-bold">Zip-code</label>
-    <input
-      v-model="input"
-      name="zipCode"
-      class="input-field border-rounded bg-light-gray"
-    />
+    <label for="city" class="label-bold">City</label>
+    <input v-model="input" name="city" class="input-field border-rounded bg-light-gray" />
     <div v-if="errors.length <= 0">
       <span class="error-message"></span>
     </div>
@@ -16,11 +12,11 @@
 </template>
 
 <style scoped>
-@import "input-style.css";
+
 </style>
 
 <script lang="ts">
-import useInputValidator from "../../modules/useInputValidator";
+import useInputValidator from "../../../modules/useInputValidator";
 import { minLength, maxLength, required } from "@/validators";
 import { ref } from "vue";
 

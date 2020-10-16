@@ -5,7 +5,6 @@ export default function (startVal: string, validators: Array<Function>, onValida
     const errors: Ref<any> = ref([])
     watch(input, value => {
         errors.value = validators.map(validator => validator(value))
-        console.log(errors)
         onValidate(value)
     });
 

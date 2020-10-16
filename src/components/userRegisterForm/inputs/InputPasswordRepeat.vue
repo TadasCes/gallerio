@@ -1,9 +1,9 @@
 <template>
   <div class="input-box">
-    <label for="email" class="label-bold">Email</label>
+    <label for="password" class="label-bold">Repeat password</label>
     <input
       v-model="input"
-      name="email"
+      name="password"
       class="input-field border-rounded bg-light-gray"
     />
     <div v-if="errors.length <= 0">
@@ -16,12 +16,12 @@
 </template>
 
 <style scoped>
-@import "input-style.css";
+
 </style>
 
 <script lang="ts">
-import useInputValidator from "../../modules/useInputValidator";
-import { email, required } from "@/validators";
+import useInputValidator from "../../../modules/useInputValidator";
+import { minLength, maxLength, required } from "@/validators";
 import { ref } from "vue";
 
 export default {
@@ -32,7 +32,7 @@ export default {
   setup(props: any, { emit }: any) {
     const { input, errors } = useInputValidator(
       props.value,
-      [email(), required()],
+      [minLength(3), maxLength(50), required()],
       (value: string) => emit("input", value)
     );
 

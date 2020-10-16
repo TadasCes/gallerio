@@ -1,7 +1,11 @@
 <template>
   <div class="input-box">
-    <label for="age" class="label-bold">Age</label>
-    <input v-model="input" name="age" class="input-field border-rounded bg-light-gray" />
+    <label for="zipCode" class="label-bold">Zip-code</label>
+    <input
+      v-model="input"
+      name="zipCode"
+      class="input-field border-rounded bg-light-gray"
+    />
     <div v-if="errors.length <= 0">
       <span class="error-message"></span>
     </div>
@@ -12,12 +16,12 @@
 </template>
 
 <style scoped>
-@import "input-style.css";
+
 </style>
 
 <script lang="ts">
-import useInputValidator from "../../modules/useInputValidator";
-import { minNumber, maxNumber } from "@/validators";
+import useInputValidator from "../../../modules/useInputValidator";
+import { minLength, maxLength, required } from "@/validators";
 import { ref } from "vue";
 
 export default {
@@ -26,10 +30,9 @@ export default {
     value: String
   },
   setup(props: any, { emit }: any) {
-    // make validation only then not empty
     const { input, errors } = useInputValidator(
       props.value,
-      [minNumber(1), maxNumber(120)],
+      [minLength(3), maxLength(50), required()],
       (value: string) => emit("input", value)
     );
 

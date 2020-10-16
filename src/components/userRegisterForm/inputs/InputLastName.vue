@@ -16,11 +16,11 @@
 </template>
 
 <style scoped>
-@import "input-style.css";
+
 </style>
 
 <script lang="ts">
-import useInputValidator from "../../modules/useInputValidator";
+import useInputValidator from "../../../modules/useInputValidator";
 import { minLength, maxLength, required } from "@/validators";
 import { ref } from "vue";
 

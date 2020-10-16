@@ -4,7 +4,9 @@
 
     <div class="row ">
       <div class="col-md-6 ">
-        <InputName></InputName>
+        <InputName
+          @get-input-value="getInputValue"
+        ></InputName>
       </div>
       <div class="col-md-6">
         <InputLastName></InputLastName>
@@ -49,7 +51,7 @@
     </div>
     <hr />
     <div class="form-actions float-left mt-2">
-      <button class="btn btn-primary mr-3">Submit</button>
+      <button @click.prevent="submitForm" class="btn btn-primary mr-3">Submit</button>
       <button @click.prevent="clearFormFields" class="btn btn-outline-primary">
         Reset
       </button>
@@ -58,6 +60,7 @@
 </template>
 
 <style scoped>
+@import "./style/input-style.css";
 @media screen and (min-width: 1002px) {
   .register-form {
     max-width: 60%;
@@ -76,18 +79,21 @@ hr {
 </style>
 
 <script lang="ts">
-import { computed, reactive, ref, watch } from "vue";
-import InputName from "./InputName.vue";
-import InputLastName from "./InputLastName.vue";
-import InputEmail from "./InputEmail.vue";
-import InputPassword from "./InputPassword.vue";
-import InputPasswordRepeat from "./InputPasswordRepeat.vue";
-import InputAge from "./InputAge.vue";
-import InputWebsite from "./InputWebsite.vue";
-import InputAddress from "./InputAddress.vue";
-import InputCity from "./InputCity.vue";
-import InputCountry from "./InputCountry.vue";
-import InputZip from "./InputZip.vue";
+import { computed, onMounted, reactive, ref, watch } from "vue";
+``;
+import InputName from "./inputs/InputName.vue";
+import InputLastName from "./inputs/InputLastName.vue";
+import InputEmail from "./inputs/InputEmail.vue";
+import InputPassword from "./inputs/InputPassword.vue";
+import InputPasswordRepeat from "./inputs/InputPasswordRepeat.vue";
+import InputAge from "./inputs/InputAge.vue";
+import InputWebsite from "./inputs/InputWebsite.vue";
+import InputAddress from "./inputs/InputAddress.vue";
+import InputCity from "./inputs/InputCity.vue";
+import InputCountry from "./inputs/InputCountry.vue";
+import InputZip from "./inputs/InputZip.vue";
+import state from "@/state"
+
 
 export default {
   components: {
@@ -103,6 +109,7 @@ export default {
     InputCountry,
     InputZip
   },
+
   setup() {
     const passwordRepeat = ref("");
     const lastName = ref("");
@@ -115,6 +122,20 @@ export default {
     const city = ref("");
     const zip = ref("");
     const age = ref(0);
+
+
+    function submitForm() {
+
+
+      state.toggleTriggered()
+      console.log(state.userToBeCreated.value)
+
+    }
+
+    function getInputValue(value: string) {
+      name.value = value;
+      console.log(name.value);
+    }
 
     function clearFormFields() {
       passwordRepeat.value = "";
@@ -130,9 +151,13 @@ export default {
       age.value = 0;
     }
 
+ 
+
     return {
       clearFormFields,
       passwordRepeat,
+      getInputValue,
+      submitForm,
       lastName,
       password,
       website,
