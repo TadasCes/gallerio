@@ -5,20 +5,19 @@
     <div v-if="errors.length <= 0">
       <span class="error-message"></span>
     </div>
-    <div v-else style="padding: 0 0.5em">
+    <div v-else class="padding-05">
       <span v-for="error in errors" :key="error" class="error-message">{{ error }}</span>
     </div>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <script lang="ts">
 import useInputValidator from "../../../modules/useInputValidator";
 import { minNumber, maxNumber } from "@/validators";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import state from "@/state";
 
 export default {
   emits: ["input"],
@@ -26,12 +25,17 @@ export default {
     value: String
   },
   setup(props: any, { emit }: any) {
-    // make validation only then not empty
+    const componentName = "InputAge";
     const { input, errors } = useInputValidator(
       props.value,
+      componentName,
       [minNumber(1), maxNumber(120)],
       (value: string) => emit("input", value)
     );
+
+    watch(state.isFormSubmitTriggered, (triggered) => {
+      state.userToBeCreated.age = parseInt(input.value);
+    });
 
     return {
       input,

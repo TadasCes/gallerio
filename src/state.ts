@@ -1,11 +1,11 @@
-import { computed, reactive, ReactiveEffect, Ref, ref, watch } from "vue";
-import useInputErrors from './modules/useInputErrors';
-
+import { computed, reactive } from "vue";
+import { IAddress } from "./models/IAddress";
+import { IUser } from "./models/IUser";
 
 // Registration (useRegistration, inputs, RegistraionForm)
 const registrationState = reactive({
   submitTriggered: false,
-  hasErrors: false
+  hasErrors: true
 });
 
 const isFormSubmitTriggered = computed(() => registrationState.submitTriggered);
@@ -13,18 +13,32 @@ const toggleTriggered = () => {
   registrationState.submitTriggered = !registrationState.submitTriggered;
 };
 
-// Add user fields
-const userToBeCreated = ref({})
+// Define user fields
+const userAddress: IAddress = {
+  country: "",
+  city: "",
+  streetAddress: "",
+  zipCode: 0
+};
 
+const userToBeCreated: IUser = {
+  id: 0,
+  name: "",
+  lastName: "",
+  email: "",
+  password: "",
+  age: 0,
+  website: "",
+  address: userAddress
+};
 
 // Errors
 const errorList: Map<string, string> = reactive(new Map());
 
 const doesHasErrors = computed(() => registrationState.hasErrors);
 const toggleHasErrors = (value: boolean) => {
-  registrationState.hasErrors = value
-}
-
+  registrationState.hasErrors = value;
+};
 
 const state = {
   isFormSubmitTriggered,

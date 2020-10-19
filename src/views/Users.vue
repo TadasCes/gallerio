@@ -13,12 +13,11 @@
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
 
 <script lang="ts">
 import UserTable from "@/components/UserTable.vue";
-import { computed, reactive, ref, watch } from "vue";
+import { computed, reactive } from "vue";
 import useUsers from "../modules/useUsers";
 
 export default {
@@ -34,11 +33,11 @@ export default {
     });
 
     async function addNewUser() {
-      await addUser(user.name, user.age, user.email);
+      // await addUser(user.name, user.age, user.email);
     }
 
     async function deleteUserFromList(id: number) {
-      await deleteUser(id)
+      await deleteUser(id);
     }
 
     return {

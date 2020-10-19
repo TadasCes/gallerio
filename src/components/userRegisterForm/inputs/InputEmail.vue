@@ -9,19 +9,17 @@
     <div v-if="errors.length <= 0">
       <span class="error-message"></span>
     </div>
-    <div v-else style="padding: 0 0.5em">
+    <div v-else class="padding-05">
       <span v-for="error in errors" :key="error" class="error-message">{{ error }}</span>
     </div>
   </div>
 </template>
 
-<style scoped>
-</style>
-
 <script lang="ts">
 import useInputValidator from "../../../modules/useInputValidator";
 import { email, required } from "@/validators";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import state from "@/state";
 
 export default {
   emits: ["input"],
@@ -29,11 +27,17 @@ export default {
     value: String
   },
   setup(props: any, { emit }: any) {
+    const componentName = "InputEmail";
     const { input, errors } = useInputValidator(
       props.value,
+      componentName,
       [email(), required()],
       (value: string) => emit("input", value)
     );
+
+    watch(state.isFormSubmitTriggered, (triggered) => {
+      state.userToBeCreated.email = input.value;
+    });
 
     return {
       input,

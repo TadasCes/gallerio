@@ -4,9 +4,7 @@
 
     <div class="row ">
       <div class="col-md-6 ">
-        <InputName
-          @get-input-value="getInputValue"
-        ></InputName>
+        <InputName></InputName>
       </div>
       <div class="col-md-6">
         <InputLastName></InputLastName>
@@ -92,8 +90,7 @@ import InputAddress from "./inputs/InputAddress.vue";
 import InputCity from "./inputs/InputCity.vue";
 import InputCountry from "./inputs/InputCountry.vue";
 import InputZip from "./inputs/InputZip.vue";
-import state from "@/state"
-
+import state from "@/state";
 
 export default {
   components: {
@@ -123,18 +120,15 @@ export default {
     const zip = ref("");
     const age = ref(0);
 
-
     function submitForm() {
+      state.toggleTriggered();
 
-
-      state.toggleTriggered()
-      console.log(state.userToBeCreated.value)
-
-    }
-
-    function getInputValue(value: string) {
-      name.value = value;
-      console.log(name.value);
+      if (state.doesHasErrors.value) {
+        console.log("has errors");
+      } else {
+        state.userToBeCreated.id = Date.now();
+        console.log(state.userToBeCreated);
+      }
     }
 
     function clearFormFields() {
@@ -151,12 +145,11 @@ export default {
       age.value = 0;
     }
 
- 
+
 
     return {
       clearFormFields,
       passwordRepeat,
-      getInputValue,
       submitForm,
       lastName,
       password,
