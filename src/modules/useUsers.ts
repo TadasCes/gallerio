@@ -1,38 +1,31 @@
-import { IAddress } from "@/models/IAddress";
-import { computed, Ref, ref } from "vue";
+import { computed, Ref, ref, toRef } from "vue";
 import { IUser } from "../models/IUser";
+import state from "../state";
+import axios, { AxiosResponse } from "axios";
 
 export default function useUsers() {
-  const users: Ref<IUser[]> = ref([]);
-  const userAddress: IAddress = {
-    country: "",
-    city: "",
-    streetAddress: "",
-    zipCode: 0
-  };
-  async function addUser() {
-    users.value.push({
-      id: 0,
-      name: "",
-      lastName: "",
-      email: "",
-      password: "",
-      age: 0,
-      website: "",
-      address: userAddress
-    });
+
+  function addUser(user: IUser) {
+    state.userList.value.push(user);
+    console.log(state.userList.value);
   }
 
-  async function deleteUser(id: number) {
-    const user = users.value.find(user => user.id == id);
+  function deleteUser(id: number) {
+    const user = state.userList.value.find((user) => user.id == id);
     user != undefined
-      ? users.value.splice(users.value.indexOf(user), 1)
+      ? state.userList.value.splice(state.userList.value.indexOf(user), 1)
       : console.log("No user");
   }
 
+  function fetchUsers() {
+    axios.get("http://localhost:3000/users").then((response) => {
+      state.userList.value = response.data;
+    });
+  }
+
   return {
-    users: computed(() => users.value),
     addUser,
-    deleteUser
+    deleteUser,
+    fetchUsers
   };
 }

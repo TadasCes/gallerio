@@ -5,6 +5,7 @@
       v-model="input"
       name="password"
       class="input-field border-rounded bg-light-gray"
+      required
     />
     <div v-if="errors.length <= 0">
       <span class="error-message"></span>
@@ -19,9 +20,10 @@
 
 <script lang="ts">
 import useInputValidator from "../../../modules/useInputValidator";
-import { minLength, maxLength, required } from "@/validators";
-import { ref, watch } from "vue";
+import { minLength, maxLength, required, samePasswords } from "@/validators";
+import { Ref, ref, watch } from "vue";
 import state from "@/state";
+import useInputErrors from '@/modules/useInputErrors';
 
 export default {
   emits: ["input"],
@@ -29,16 +31,24 @@ export default {
     value: String
   },
   setup(props: any, { emit }: any) {
-    const componentName = "InputName";
+    const componentName = "InputPasswordRepeat";
+    const errors: Ref<Array<string | null>> = ref([]);
+    const validators = [samePasswords(state.userToBeCreated.password), required()];
+    const { addError } = useInputErrors();
+    const input = ref("");
 
-    const { input, errors } = useInputValidator(
-      props.value,
-      componentName,
-      [minLength(3), maxLength(50), required()],
-      (value: string) => emit("input", value)
-    );
+    function doesHaveErrors(errorList: Array<string | null>) {
+      errorList.forEach((error) => {
+        if (error !== null) addError(componentName, error);
+      });
+    }
 
-   
+    watch(state.isFormSubmitTriggered, (triggered) => {
+      errors.value == null;
+      errors.value = validators.map((validator) => validator(input.value));
+      doesHaveErrors(errors.value);
+    });
+
     return {
       input,
       errors

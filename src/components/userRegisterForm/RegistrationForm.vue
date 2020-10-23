@@ -6,7 +6,7 @@
       <div class="col-md-6 ">
         <InputName></InputName>
       </div>
-      <div class="col-md-6">
+       <div class="col-md-6">
         <InputLastName></InputLastName>
       </div>
     </div>
@@ -91,6 +91,10 @@ import InputCity from "./inputs/InputCity.vue";
 import InputCountry from "./inputs/InputCountry.vue";
 import InputZip from "./inputs/InputZip.vue";
 import state from "@/state";
+import useUsers from "../../modules/useUsers";
+import router from "@/router";
+import { IAddress } from "@/models/IAddress";
+import { IUser } from "@/models/IUser";
 
 export default {
   components: {
@@ -108,6 +112,12 @@ export default {
   },
 
   setup() {
+
+    // padaryt PasswordRepeat funkcionaluma
+    
+
+    const { addUser } = useUsers();
+
     const passwordRepeat = ref("");
     const lastName = ref("");
     const password = ref("");
@@ -121,14 +131,21 @@ export default {
     const age = ref(0);
 
     function submitForm() {
+      state.errorList.value.length = 0;
       state.toggleTriggered();
 
-      if (state.doesHasErrors.value) {
-        console.log("has errors");
-      } else {
-        state.userToBeCreated.id = Date.now();
-        console.log(state.userToBeCreated);
-      }
+      setTimeout(() => {
+        console.log(state.errorList.value);
+        console.log(state.doesHasErrors.value);
+        console.log(state.errorList.value.length);
+        if (state.errorList.value.length > 0) {
+          console.log("has errors");
+        } else {
+          state.userToBeCreated.id = Date.now();
+          addUser(state.userToBeCreated);
+          router.push("/users");
+        }
+      }, 1000);
     }
 
     function clearFormFields() {
@@ -145,7 +162,27 @@ export default {
       age.value = 0;
     }
 
+    onMounted(() => {
+      const userAddress: IAddress = {
+        country: "",
+        city: "",
+        streetAddress: "",
+        zipCode: 0
+      };
 
+      const userToBeCreated: IUser = {
+        id: 0,
+        name: "",
+        lastName: "",
+        email: "",
+        password: "",
+        age: 0,
+        website: "",
+        address: userAddress
+      };
+
+      state.userToBeCreated = userToBeCreated;
+    });
 
     return {
       clearFormFields,

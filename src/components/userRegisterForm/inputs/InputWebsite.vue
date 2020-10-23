@@ -1,40 +1,48 @@
 <template>
   <div class="input-box">
-
-  <label for="website" class="label-bold">Website</label>
-  <input v-model="website" name="website" class="input-field border-rounded bg-light-gray"/>
+    <label for="website" class="label-bold">Website</label>
+    <input
+      v-model="website"
+      name="website"
+      class="input-field border-rounded bg-light-gray"
+    />
   </div>
 </template>
 
-<style scoped>
-
-
-</style>
+<style scoped></style>
 
 <script lang="ts">
-import { computed, reactive, ref, watch } from "vue";
-import state from '@/state';
+import { computed, reactive, Ref, ref, watch } from "vue";
+import state from "@/state";
+import useInputErrors from "@/modules/useInputErrors";
+import { minLength } from "@/validators";
 
 export default {
-
   setup() {
-    const website = ref("");
     const componentName = "InputWebsite";
-    // const { addError } = useInputErrors();
-    // const { input, errors } = useInputValidator(
-    //   props.value,
-    //   componentName,
-    //   [minLength(3), maxLength(30), required()],
-    //   (value: string) => emit("input", value)
-    // );
+    const errors: Ref<Array<string | null>> = ref([]);
+    const validators = [minLength(3)];
+    const { addError } = useInputErrors();
+    const input = ref("");
 
+    function doesHaveErrors(errorList: Array<string | null>) {
+      errorList.forEach((error) => {
+        if (error !== null) addError(componentName, error);
+      });
+    }
 
-    // watch(state.isFormSubmitTriggered, triggered => {
-    //     state.userToBeCreated.name = input.value;
-    // });
-    
+    watch(state.isFormSubmitTriggered, (triggered) => {
+      errors.value == null;
+      errors.value = validators.map((validator) => validator(input.value));
+      doesHaveErrors(errors.value);
+      if (state.errorList.value.length === 0) {
+        state.userToBeCreated.website = input.value;
+      }
+    });
+
     return {
-        website
+      input,
+      errors
     };
   }
 };

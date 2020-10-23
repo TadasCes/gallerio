@@ -7,7 +7,6 @@
   <table class="table table-striped table-bordered">
     <thead class="thead-dark">
       <tr>
-        <th scope="col" id="table-id">#</th>
         <th scope="col">
           Name
           <button>
@@ -15,12 +14,20 @@
           </button>
         </th>
         <th scope="col">
+          Email
+          <i class="material-icons" @click="sortByEmail">arrow_drop_down</i>
+        </th>
+        <th scope="col">
           Age
           <i class="material-icons" @click="sortByAge">arrow_drop_down</i>
         </th>
-        <th scope="col">
-          Email
-          <i class="material-icons" @click="sortByEmail">arrow_drop_down</i>
+         <th scope="col">
+          Country
+          <i class="material-icons" @click="alio">arrow_drop_down</i>
+
+        </th>
+         <th scope="col">
+          City
         </th>
         <th scope="col">
           Actions
@@ -43,6 +50,7 @@ import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
 import UserRow from "./UserRow.vue";
 import useUsersTable from "@/modules/useUsersTable";
 import { IUser } from "../models/IUser";
+import state from '@/state';
 
 export default {
   emits: ["delete-user"],
@@ -91,15 +99,21 @@ export default {
 
     function deleteUser(id: number) {
       emit("delete-user", id);
-      alert("User deleted");
       searchString.value = "";
     }
 
+    function alio() {
+      console.log(state.userList.value)
+    }
+
     onMounted(() => {
+      
       displayedList.value = userList.value;
+
     });
 
     return {
+      alio,
       sortByName,
       sortByAge,
       sortByEmail,

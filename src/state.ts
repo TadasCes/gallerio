@@ -1,6 +1,8 @@
-import { computed, reactive } from "vue";
+import { computed, reactive, Ref, ref } from "vue";
 import { IAddress } from "./models/IAddress";
+import { IError } from './models/IError';
 import { IUser } from "./models/IUser";
+import useUsers from "./modules/useUsers";
 
 // Registration (useRegistration, inputs, RegistraionForm)
 const registrationState = reactive({
@@ -32,13 +34,20 @@ const userToBeCreated: IUser = {
   address: userAddress
 };
 
+// User list
+
+const userList: Ref<any[]> = ref([]);
+
+
 // Errors
-const errorList: Map<string, string> = reactive(new Map());
+const errorList: Ref<IError[]> = ref([])
 
 const doesHasErrors = computed(() => registrationState.hasErrors);
 const toggleHasErrors = (value: boolean) => {
   registrationState.hasErrors = value;
 };
+
+
 
 const state = {
   isFormSubmitTriggered,
@@ -46,7 +55,8 @@ const state = {
   doesHasErrors,
   toggleHasErrors,
   errorList,
-  userToBeCreated
+  userToBeCreated,
+  userList
 };
 
 export default state;

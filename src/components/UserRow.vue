@@ -1,9 +1,11 @@
 <template>
   <tr>
-    <td>{{ user.id }}</td>
-    <td>{{ user.name }}</td>
-    <td>{{ user.age }}</td>
+    <td>{{ user.name }} {{ user.lastName }}</td>
     <td>{{ user.email }}</td>
+    <td>{{ user.age }}</td>
+    <td>{{ user.country }}</td>
+    <td>{{ user.city }}</td>
+    
     <td class="w-25">
       <button @click="deleteUser" class="btn btn-outline-danger">Delete</button>
     </td>

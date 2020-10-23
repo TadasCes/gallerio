@@ -46,7 +46,7 @@ const email = () => {
 
 const samePasswords = (password: string) => {
   return (input: string) =>
-    input === password ? `Passwords must match  \t` : null;
+    input == password ? `Passwords must match  \t` : null;
 };
 
 

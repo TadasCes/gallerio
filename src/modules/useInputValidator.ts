@@ -6,7 +6,6 @@ export default function(
   startVal: string,
   componentName: string,
   validators: Array<Function>,
-  onValidate: any
 ) {
   const { addError } = useInputErrors();
   const input = ref(startVal);
@@ -20,7 +19,7 @@ export default function(
         addError(componentName, error);
       }
     });
-    onValidate(value);
+    
   });
 
   return {

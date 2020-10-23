@@ -1,7 +1,12 @@
 <template>
   <div class="input-box">
     <label for="name" class="label-bold">Name</label>
-    <input type="text" v-model="input" class="input-field border-rounded bg-light-gray" />
+    <input
+      type="text"
+      v-model="input"
+      class="input-field border-rounded bg-light-gray"
+      required
+    />
     <div v-if="errors.length <= 0">
       <span class="error-message"></span>
     </div>
@@ -14,7 +19,7 @@
 <script lang="ts">
 import useInputValidator from "../../../modules/useInputValidator";
 import { minLength, maxLength, required } from "@/validators";
-import { watch } from "vue";
+import { Ref, ref, watch } from "vue";
 import useInputErrors from "@/modules/useInputErrors";
 import state from "@/state";
 
@@ -25,16 +30,24 @@ export default {
   },
   setup(props: any, { emit }: any) {
     const componentName = "InputName";
+    const errors: Ref<Array<string | null>> = ref([]);
+    const validators = [minLength(3), maxLength(30), required()];
     const { addError } = useInputErrors();
-    const { input, errors } = useInputValidator(
-      props.value,
-      componentName,
-      [minLength(3), maxLength(30), required()],
-      (value: string) => emit("input", value)
-    );
+    const input = ref("");
 
-    watch(state.isFormSubmitTriggered, triggered => {
+    function doesHaveErrors(errorList: Array<string | null>) {
+      errorList.forEach((error) => {
+        if (error !== null) addError(componentName, error);
+      });
+    }
+
+    watch(state.isFormSubmitTriggered, (triggered) => {
+      errors.value == null;
+      errors.value = validators.map((validator) => validator(input.value));
+      doesHaveErrors(errors.value);
+      if (state.errorList.value.length === 0) {
         state.userToBeCreated.name = input.value;
+      }
     });
 
     return {

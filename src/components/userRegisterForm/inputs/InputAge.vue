@@ -1,7 +1,12 @@
 <template>
   <div class="input-box">
     <label for="age" class="label-bold">Age</label>
-    <input v-model="input" name="age" class="input-field border-rounded bg-light-gray" />
+    <input
+      v-model="input"
+      type="number"
+      name="age"
+      class="input-field border-rounded bg-light-gray"
+    />
     <div v-if="errors.length <= 0">
       <span class="error-message"></span>
     </div>
@@ -16,8 +21,9 @@
 <script lang="ts">
 import useInputValidator from "../../../modules/useInputValidator";
 import { minNumber, maxNumber } from "@/validators";
-import { ref, watch } from "vue";
+import { Ref, ref, watch } from "vue";
 import state from "@/state";
+import useInputErrors from "@/modules/useInputErrors";
 
 export default {
   emits: ["input"],
@@ -26,15 +32,26 @@ export default {
   },
   setup(props: any, { emit }: any) {
     const componentName = "InputAge";
-    const { input, errors } = useInputValidator(
-      props.value,
-      componentName,
-      [minNumber(1), maxNumber(120)],
-      (value: string) => emit("input", value)
-    );
+    const errors: Ref<Array<string | null>> = ref([]);
+    const validators = [maxNumber(100), minNumber(3)];
+    const { addError } = useInputErrors();
+    const input = ref(0);
+
+    function doesHaveErrors(errorList: Array<string | null>) {
+      errorList.forEach((error) => {
+        if (error !== null) addError(componentName, error);
+      });
+    }
 
     watch(state.isFormSubmitTriggered, (triggered) => {
-      state.userToBeCreated.age = parseInt(input.value);
+      if (input.value !== null) {
+        errors.value == null;
+        errors.value = validators.map((validator) => validator(input.value));
+        doesHaveErrors(errors.value);
+        if (state.errorList.value.length === 0) {
+          state.userToBeCreated.age = input.value;
+        }
+      }
     });
 
     return {
