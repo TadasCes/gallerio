@@ -43,3 +43,9 @@
   padding: 0 0.5em;
 
 }
+
+.suggestion-box {
+  z-index: 1000;
+  border-bottom: 0.5px solid black;
+  list-style: none;
+}

@@ -22,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
 		name: "UserRegister",
 		component: () => import("../views/UserRegister.vue"),
 	},
+	{
+		path: "/user-edit/:name",
+		name: "UserEdit",
+		component: () => import("../views/UserEdit.vue"),
+	},
 ];
 
 const router = createRouter({

@@ -1,65 +1,54 @@
 <template>
+  <h1>Edit user</h1>
   <form class="container register-form">
     <hr />
 
     <div class="row ">
       <div class="col-md-6 ">
-        <InputName></InputName>
+        <InputName :value="name.value"></InputName>
       </div>
       <div class="col-md-6">
-        <InputLastName></InputLastName>
+        <InputLastName :value="lastName"></InputLastName>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <InputEmail></InputEmail>
+        <InputEmail :value="email"></InputEmail>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
-        <InputPassword></InputPassword>
+        <InputAge :value="age"></InputAge>
       </div>
       <div class="col-md-6">
-        <InputPasswordRepeat></InputPasswordRepeat>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <InputAge></InputAge>
-      </div>
-      <div class="col-md-6">
-        <InputWebsite></InputWebsite>
+        <InputWebsite :value="website"></InputWebsite>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
-        <InputCountry></InputCountry>
+        <InputCountry :value="country"></InputCountry>
       </div>
       <div class="col-md-6">
-        <InputCity></InputCity>
+        <InputCity :value="city"></InputCity>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
-        <InputAddress></InputAddress>
+        <InputAddress :value="streetAddress"></InputAddress>
       </div>
       <div class="col-md-6">
-        <InputZip></InputZip>
+        <InputZip :value="zip"></InputZip>
       </div>
     </div>
     <hr />
     <div class="form-actions float-left mt-2">
       <button @click.prevent="submitForm" class="btn btn-primary mr-3">Submit</button>
-      <button @click.prevent="clearForm" class="btn btn-outline-primary">
-        Reset
-      </button>
     </div>
   </form>
 </template>
 
 <style scoped>
-
-@import "../../assets/syles/input-style.css";
+@import "../assets/syles/input-style.css";
 @media screen and (min-width: 1002px) {
   .register-form {
     max-width: 60%;
@@ -80,19 +69,17 @@ hr {
 <script lang="ts">
 import { computed, onMounted, reactive, ref, watch } from "vue";
 ``;
-import InputName from "./inputs/InputName.vue";
-import InputLastName from "./inputs/InputLastName.vue";
-import InputEmail from "./inputs/InputEmail.vue";
-import InputPassword from "./inputs/InputPassword.vue";
-import InputPasswordRepeat from "./inputs/InputPasswordRepeat.vue";
-import InputAge from "./inputs/InputAge.vue";
-import InputWebsite from "./inputs/InputWebsite.vue";
-import InputAddress from "./inputs/InputAddress.vue";
-import InputCity from "./inputs/InputCity.vue";
-import InputCountry from "./inputs/InputCountry.vue";
-import InputZip from "./inputs/InputZip.vue";
+import InputName from "../components/userRegisterForm/inputs/InputName.vue";
+import InputLastName from "../components/userRegisterForm/inputs/InputLastName.vue";
+import InputEmail from "../components/userRegisterForm/inputs/InputEmail.vue";
+import InputAge from "../components/userRegisterForm/inputs/InputAge.vue";
+import InputWebsite from "../components/userRegisterForm/inputs/InputWebsite.vue";
+import InputAddress from "../components/userRegisterForm/inputs/InputAddress.vue";
+import InputCity from "../components/userRegisterForm/inputs/InputCity.vue";
+import InputCountry from "../components/userRegisterForm/inputs/InputCountry.vue";
+import InputZip from "../components/userRegisterForm/inputs/InputZip.vue";
 import state from "@/state";
-import useUsers from "../../modules/useUsers";
+import useUsers from "../modules/useUsers";
 import router from "@/router";
 import { IAddress } from "@/models/IAddress";
 import { IUser } from "@/models/IUser";
@@ -103,8 +90,6 @@ export default {
     InputName,
     InputLastName,
     InputEmail,
-    InputPassword,
-    InputPasswordRepeat,
     InputAge,
     InputWebsite,
     InputAddress,
@@ -114,24 +99,35 @@ export default {
   },
 
   setup() {
-    // padaryt PasswordRepeat funkcionaluma
-    //#2 user/:id - turi rodyti single user by id is BE
-    //                - turi tureti userio EDIT forma
 
     const { addUser } = useUsers();
     const { postUser } = useUserService();
 
     const passwordRepeat = ref("");
     const lastName = ref("");
-    const password = ref("");
     const website = ref("");
     const country = ref("");
-    const address = ref("");
+    const streetAddress = ref("");
     const email = ref("");
     const name = ref("");
     const city = ref("");
-    const zip = ref("");
+    const zip = ref(0);
     const age = ref(0);
+
+    function getUser() {
+      name.value = state.userForm.name
+      lastName.value = state.userForm.lastName
+      website.value = state.userForm.website
+      email.value = state.userForm.email
+      age.value = state.userForm.age
+      country.value = state.userForm.address.country
+      streetAddress.value = state.userForm.address.streetAddress
+      city.value = state.userForm.address.city
+      zip.value = state.userForm.address.zipCode
+      console.log()
+    }
+
+    getUser()
 
     function submitForm() {
       state.errorList.value.length = 0;
@@ -152,11 +148,7 @@ export default {
       }, 1000);
     }
 
-    function clearform() {
-      console.log("jo")
-      // paklaust kaip tvarkingai persiust event
-      // i visus child components
-    }
+
 
     onMounted(() => {
       const userAddress: IAddress = {
@@ -182,12 +174,10 @@ export default {
     return {
       passwordRepeat,
       submitForm,
-      clearform,
       lastName,
-      password,
       website,
       country,
-      address,
+      streetAddress,
       email,
       name,
       city,

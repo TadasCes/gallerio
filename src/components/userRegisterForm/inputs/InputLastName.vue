@@ -48,7 +48,7 @@ export default {
       errors.value = validators.map((validator) => validator(input.value));
       doesHaveErrors(errors.value);
       if (state.errorList.value.length === 0) {
-        state.userToBeCreated.lastName = input.value;
+        state.userForm.lastName = input.value;
       }
     });
 

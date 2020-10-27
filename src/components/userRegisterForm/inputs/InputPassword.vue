@@ -50,7 +50,7 @@ export default {
       errors.value = validators.map((validator) => validator(input.value));
       doesHaveErrors(errors.value);
       if (state.errorList.value.length === 0) {
-        state.userToBeCreated.password = input.value;
+        state.userForm.password = input.value;
       }
     });
 

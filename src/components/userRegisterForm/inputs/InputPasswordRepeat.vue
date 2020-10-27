@@ -33,7 +33,7 @@ export default {
   setup(props: any, { emit }: any) {
     const componentName = "InputPasswordRepeat";
     const errors: Ref<Array<string | null>> = ref([]);
-    const validators = [samePasswords(state.userToBeCreated.password), required()];
+    const validators = [samePasswords(state.userForm.password), required()];
     const { addError } = useInputErrors();
     const input = ref("");
 

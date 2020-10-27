@@ -49,7 +49,7 @@ export default {
       errors.value = validators.map((validator) => validator(input.value));
       doesHaveErrors(errors.value);
       if (state.errorList.value.length === 0) {
-        state.userToBeCreated.address.zipCode = parseInt(input.value);
+        state.userForm.address.zipCode = parseInt(input.value);
       }
     });
     return {

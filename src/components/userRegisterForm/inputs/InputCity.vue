@@ -46,7 +46,7 @@ export default {
       errors.value = validators.map((validator) => validator(input.value));
       doesHaveErrors(errors.value);
       if (state.errorList.value.length === 0) {
-        state.userToBeCreated.address.city = input.value;
+        state.userForm.address.city = input.value;
       }
     });
 

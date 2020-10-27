@@ -21,12 +21,11 @@
           Age
           <i class="material-icons" @click="sortByAge">arrow_drop_down</i>
         </th>
-         <th scope="col">
+        <th scope="col">
           Country
           <i class="material-icons" @click="alio">arrow_drop_down</i>
-
         </th>
-         <th scope="col">
+        <th scope="col">
           City
         </th>
         <th scope="col">
@@ -50,7 +49,7 @@ import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
 import UserRow from "./UserRow.vue";
 import useUsersTable from "@/modules/useUsersTable";
 import { IUser } from "../models/IUser";
-import state from '@/state';
+import state from "@/state";
 
 export default {
   emits: ["delete-user"],
@@ -78,7 +77,7 @@ export default {
     const isSearching = () => {
       return searchString.value !== "" ? true : false;
     };
-    
+
     watch(userList.value, () => {
       displayedList.value = userList.value;
     });
@@ -103,13 +102,11 @@ export default {
     }
 
     function alio() {
-      console.log(state.userList.value)
+      console.log(state.userList.value);
     }
 
     onMounted(() => {
-      
       displayedList.value = userList.value;
-
     });
 
     return {

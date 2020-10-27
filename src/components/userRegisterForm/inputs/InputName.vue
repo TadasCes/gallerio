@@ -33,7 +33,7 @@ export default {
     const errors: Ref<Array<string | null>> = ref([]);
     const validators = [minLength(3), maxLength(30), required()];
     const { addError } = useInputErrors();
-    const input = ref("");
+    const input = ref(props.value);
 
     function doesHaveErrors(errorList: Array<string | null>) {
       errorList.forEach((error) => {
@@ -46,7 +46,7 @@ export default {
       errors.value = validators.map((validator) => validator(input.value));
       doesHaveErrors(errors.value);
       if (state.errorList.value.length === 0) {
-        state.userToBeCreated.name = input.value;
+        state.userForm.name = input.value;
       }
     });
 

@@ -1,0 +1,26 @@
+[
+  {
+    "country": "Lithuania",
+    "city": "Vilnius",
+    "streetAddress": "Kauno g. 151",
+    "zipCode": "11021"
+  },
+  {
+    "country": "Lithuania",
+    "city": "Kaunas",
+    "streetAddress": "Vilniaus g. 151",
+    "zipCode": "17091"
+  },
+  {
+    "country": "Lithuania",
+    "city": "Jurbarkas",
+    "streetAddress": "Laisves g. 11",
+    "zipCode": "91021"
+  },
+  {
+    "country": "Lithuania",
+    "city": "Vilnius",
+    "streetAddress": "Alejos g. 151",
+    "zipCode": "11751"
+  }
+]

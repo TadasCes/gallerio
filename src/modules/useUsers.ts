@@ -4,7 +4,6 @@ import state from "../state";
 import axios, { AxiosResponse } from "axios";
 
 export default function useUsers() {
-
   function addUser(user: IUser) {
     state.userList.value.push(user);
     console.log(state.userList.value);
@@ -17,15 +16,8 @@ export default function useUsers() {
       : console.log("No user");
   }
 
-  function fetchUsers() {
-    axios.get("http://localhost:3000/users").then((response) => {
-      state.userList.value = response.data;
-    });
-  }
-
   return {
     addUser,
-    deleteUser,
-    fetchUsers
+    deleteUser
   };
 }

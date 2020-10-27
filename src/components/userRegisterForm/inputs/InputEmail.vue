@@ -45,7 +45,7 @@ export default {
       errors.value = validators.map((validator) => validator(input.value));
       doesHaveErrors(errors.value);
       if (state.errorList.value.length === 0) {
-        state.userToBeCreated.email = input.value;
+        state.userForm.email = input.value;
       }
     });
 

@@ -13,7 +13,7 @@ export default function(
 
   watch(input, (value) => {
     errors.value = validators.map((validator) => validator(value));
-    state.errorList.delete(componentName);
+    // state.errorList.delete(componentName);
     errors.value.forEach((error: string | null) => {
       if (error !== null) {
         addError(componentName, error);

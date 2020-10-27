@@ -1,6 +1,6 @@
 import { computed, reactive, Ref, ref } from "vue";
 import { IAddress } from "./models/IAddress";
-import { IError } from './models/IError';
+import { IError } from "./models/IError";
 import { IUser } from "./models/IUser";
 import useUsers from "./modules/useUsers";
 
@@ -23,8 +23,7 @@ const userAddress: IAddress = {
   zipCode: 0
 };
 
-const userToBeCreated: IUser = {
-  id: 0,
+const userForm: IUser = {
   name: "",
   lastName: "",
   email: "",
@@ -38,16 +37,13 @@ const userToBeCreated: IUser = {
 
 const userList: Ref<any[]> = ref([]);
 
-
 // Errors
-const errorList: Ref<IError[]> = ref([])
+const errorList: Ref<IError[]> = ref([]);
 
 const doesHasErrors = computed(() => registrationState.hasErrors);
 const toggleHasErrors = (value: boolean) => {
   registrationState.hasErrors = value;
 };
-
-
 
 const state = {
   isFormSubmitTriggered,
@@ -55,7 +51,7 @@ const state = {
   doesHasErrors,
   toggleHasErrors,
   errorList,
-  userToBeCreated,
+  userForm,
   userList
 };
 
