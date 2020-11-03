@@ -1,4 +1,4 @@
-import { IAddress } from "./IAddress";
+import { IAddress } from './IAddress';
 export interface IUser {
   name: string;
   lastName: string;
@@ -8,4 +8,3 @@ export interface IUser {
   website: string;
   address: IAddress;
 }
-

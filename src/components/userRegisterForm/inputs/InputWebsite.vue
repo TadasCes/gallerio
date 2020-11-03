@@ -12,28 +12,28 @@
 <style scoped></style>
 
 <script lang="ts">
-import { computed, reactive, Ref, ref, watch } from "vue";
-import state from "@/state";
-import useInputErrors from "@/modules/useInputErrors";
-import { minLength } from "@/validators";
+import { Ref, ref, watch } from 'vue';
+import state from '@/state';
+import useInputErrors from '@/modules/useInputErrors';
+import { minLength } from '@/validators';
 
 export default {
   setup() {
-    const componentName = "InputWebsite";
+    const componentName = 'InputWebsite';
     const errors: Ref<Array<string | null>> = ref([]);
     const validators = [minLength(3)];
     const { addError } = useInputErrors();
-    const input = ref("");
+    const input: Ref<string> = ref(state.userForm.website);
 
     function doesHaveErrors(errorList: Array<string | null>) {
-      errorList.forEach((error) => {
+      errorList.forEach(error => {
         if (error !== null) addError(componentName, error);
       });
     }
 
-    watch(state.isFormSubmitTriggered, (triggered) => {
+    watch(state.isFormSubmitTriggered, () => {
       errors.value == null;
-      errors.value = validators.map((validator) => validator(input.value));
+      errors.value = validators.map(validator => validator(input.value));
       doesHaveErrors(errors.value);
       if (state.errorList.value.length === 0) {
         state.userForm.website = input.value;
@@ -42,8 +42,8 @@ export default {
 
     return {
       input,
-      errors
+      errors,
     };
-  }
+  },
 };
 </script>

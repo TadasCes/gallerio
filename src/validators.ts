@@ -1,10 +1,13 @@
 const required = () => {
-  return (input: string) => (input.length === 0 ? `Field is required  \t` : null);
+  return (input: string) =>
+    input.length === 0 ? `Field is required  \t` : null;
 };
 
 const minLength = (min: number) => {
   return (input: string) =>
-    input.length < min && input.length !== 0 ? `Must be at least ${min} characters  \t` : null;
+    input.length < min && input.length !== 0
+      ? `Must be at least ${min} characters  \t`
+      : null;
 };
 
 const maxLength = (max: number) => {
@@ -24,23 +27,30 @@ const maxNumber = (max: number) => {
 
 const oneLowerCase = () => {
   return (input: string) =>
-    ((input.search(/(?=.*[a-z])/) && (input.length !== 0))) ? "Must have at least one lower case letter \t" : null;
+    input.search(/(?=.*[a-z])/) && input.length !== 0
+      ? 'Must have at least one lower case letter \t'
+      : null;
 };
 
 const oneUpperCase = () => {
   return (input: string) =>
-    ((input.search(/(?=.*[A-Z])/) && (input.length !== 0))) ? "Must have at least one upper case letter  \t" : null;
+    input.search(/(?=.*[A-Z])/) && input.length !== 0
+      ? 'Must have at least one upper case letter  \t'
+      : null;
 };
 
 const oneDigit = () => {
   return (input: string) =>
-    ((input.search(/(?=.*\d)/) && (input.length !== 0))) ? "Must have at least one digit  \t" : null;
+    input.search(/(?=.*\d)/) && input.length !== 0
+      ? 'Must have at least one digit  \t'
+      : null;
 };
 
 const email = () => {
   return (input: string) =>
-    ((input.search(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) && (input.length !== 0)))
-      ? "Must be valid email form  \t"
+    input.search(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) &&
+    input.length !== 0
+      ? 'Must be valid email form  \t'
       : null;
 };
 
@@ -48,7 +58,6 @@ const samePasswords = (password: string) => {
   return (input: string) =>
     input == password ? `Passwords must match  \t` : null;
 };
-
 
 export {
   minLength,
@@ -60,5 +69,5 @@ export {
   email,
   samePasswords,
   minNumber,
-  maxNumber
+  maxNumber,
 };

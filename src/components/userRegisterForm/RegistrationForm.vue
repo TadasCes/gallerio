@@ -49,17 +49,21 @@
     </div>
     <hr />
     <div class="form-actions float-left mt-2">
-      <button @click.prevent="submitForm" class="btn btn-primary mr-3">Submit</button>
-      <button @click.prevent="clearForm" class="btn btn-outline-primary">
+      <button @click.prevent="submitForm" class="btn btn-primary mr-3">
+        Submit
+      </button>
+      <button @click.prevent="clearForm" class="btn btn-outline-primary mr-3">
         Reset
       </button>
+      <router-link to="/users">
+        <button class="btn btn-outline-primary mr-3">Back</button>
+      </router-link>
     </div>
   </form>
 </template>
 
 <style scoped>
-
-@import "../../assets/syles/input-style.css";
+@import '../../assets/syles/input-style.css';
 @media screen and (min-width: 1002px) {
   .register-form {
     max-width: 60%;
@@ -78,25 +82,25 @@ hr {
 </style>
 
 <script lang="ts">
-import { computed, onMounted, reactive, ref, watch } from "vue";
+import { onMounted, ref } from 'vue';
 ``;
-import InputName from "./inputs/InputName.vue";
-import InputLastName from "./inputs/InputLastName.vue";
-import InputEmail from "./inputs/InputEmail.vue";
-import InputPassword from "./inputs/InputPassword.vue";
-import InputPasswordRepeat from "./inputs/InputPasswordRepeat.vue";
-import InputAge from "./inputs/InputAge.vue";
-import InputWebsite from "./inputs/InputWebsite.vue";
-import InputAddress from "./inputs/InputAddress.vue";
-import InputCity from "./inputs/InputCity.vue";
-import InputCountry from "./inputs/InputCountry.vue";
-import InputZip from "./inputs/InputZip.vue";
-import state from "@/state";
-import useUsers from "../../modules/useUsers";
-import router from "@/router";
-import { IAddress } from "@/models/IAddress";
-import { IUser } from "@/models/IUser";
-import useUserService from "@/modules/useUserService";
+import InputName from './inputs/InputName.vue';
+import InputLastName from './inputs/InputLastName.vue';
+import InputEmail from './inputs/InputEmail.vue';
+import InputPassword from './inputs/InputPassword.vue';
+import InputPasswordRepeat from './inputs/InputPasswordRepeat.vue';
+import InputAge from './inputs/InputAge.vue';
+import InputWebsite from './inputs/InputWebsite.vue';
+import InputAddress from './inputs/InputAddress.vue';
+import InputCity from './inputs/InputCity.vue';
+import InputCountry from './inputs/InputCountry.vue';
+import InputZip from './inputs/InputZip.vue';
+import state from '@/state';
+import useUsers from '../../modules/useUsers';
+import router from '@/router';
+import { IAddress } from '@/models/IAddress';
+import { IUser } from '@/models/IUser';
+import useUserService from '@/modules/useUserService';
 
 export default {
   components: {
@@ -110,27 +114,23 @@ export default {
     InputAddress,
     InputCity,
     InputCountry,
-    InputZip
+    InputZip,
   },
 
   setup() {
-    // padaryt PasswordRepeat funkcionaluma
-    //#2 user/:id - turi rodyti single user by id is BE
-    //                - turi tureti userio EDIT forma
-
     const { addUser } = useUsers();
     const { postUser } = useUserService();
 
-    const passwordRepeat = ref("");
-    const lastName = ref("");
-    const password = ref("");
-    const website = ref("");
-    const country = ref("");
-    const address = ref("");
-    const email = ref("");
-    const name = ref("");
-    const city = ref("");
-    const zip = ref("");
+    const passwordRepeat = ref('');
+    const lastName = ref('');
+    const password = ref('');
+    const website = ref('');
+    const country = ref('');
+    const address = ref('');
+    const email = ref('');
+    const name = ref('');
+    const city = ref('');
+    const zip = ref('');
     const age = ref(0);
 
     function submitForm() {
@@ -142,38 +142,32 @@ export default {
         console.log(state.doesHasErrors.value);
         console.log(state.errorList.value.length);
         if (state.errorList.value.length > 0) {
-          console.log("has errors");
+          console.log('has errors');
         } else {
           addUser(state.userForm);
           console.log(state.userForm);
           postUser();
-          router.push("/users");
+          router.push('/users');
         }
       }, 1000);
     }
 
-    function clearform() {
-      console.log("jo")
-      // paklaust kaip tvarkingai persiust event
-      // i visus child components
-    }
-
     onMounted(() => {
       const userAddress: IAddress = {
-        country: "",
-        city: "",
-        streetAddress: "",
-        zipCode: 0
+        country: '',
+        city: '',
+        streetAddress: '',
+        zipCode: 0,
       };
 
       const userForm: IUser = {
-        name: "",
-        lastName: "",
-        email: "",
-        password: "",
+        name: '',
+        lastName: '',
+        email: '',
+        password: '',
         age: 0,
-        website: "",
-        address: userAddress
+        website: '',
+        address: userAddress,
       };
 
       state.userForm = userForm;
@@ -182,7 +176,6 @@ export default {
     return {
       passwordRepeat,
       submitForm,
-      clearform,
       lastName,
       password,
       website,
@@ -192,8 +185,8 @@ export default {
       name,
       city,
       zip,
-      age
+      age,
     };
-  }
+  },
 };
 </script>

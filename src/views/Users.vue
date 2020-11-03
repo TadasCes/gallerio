@@ -1,49 +1,63 @@
 <template>
   <div class="user-list">
-    <router-link to="/user-register">
-      <h1>
-        Add new user
-      </h1>
-    </router-link>
-    <UserTable :users="users" @delete-user="deleteUserFromList"> </UserTable>
+    <div>
+      <Menu></Menu>
+    </div>
+    <div>
+      <router-link to="/user-new">
+        <h1>
+          Add new user
+        </h1>
+      </router-link>
+      <UserTable
+        v-if="dataLoaded == true"
+        :users="users"
+        @delete-user="deleteUserFromList"
+      >
+      </UserTable>
+    </div>
   </div>
 </template>
 
 <style scoped></style>
 
 <script lang="ts">
-import UserTable from "@/components/UserTable.vue";
-import { computed, onBeforeMount, onMounted, reactive, ref, Ref } from "vue";
-import useUsers from "../modules/useUsers";
-import useUserService from "../modules/useUserService";
-import state from "../state";
-import { IUser } from "@/models/IUser";
+import UserTable from '@/components/UserTable.vue';
+import { computed, onMounted, reactive, ref } from 'vue';
+import useUserService from '../modules/useUserService';
+import state from '../state';
+import Menu from '@/components/Menu.vue'; // @ is an alias to /src
 
 export default {
   components: {
-    UserTable
+    UserTable,
+    Menu,
   },
   setup() {
-    const { addUser, deleteUser } = useUsers();
-    const { fetchAllUsers } = useUserService();
-    const users: Ref<IUser[]> = ref([]);
+    const { fetchAllUsers, deleteUser } = useUserService();
+    const dataLoaded = ref(false);
+    const users = reactive({
+      userList: state.userList,
+    });
 
-    async function deleteUserFromList(id: number) {
-      await deleteUser(id);
+    async function deleteUserFromList(name: string) {
+      await deleteUser(name);
     }
-    console.log(users.value);
 
     async function getAllUsers() {
       await fetchAllUsers();
-      users.value = state.userList.value;
-      console.log(users.value);
+      users.userList = state.userList.value;
+      dataLoaded.value = true;
     }
 
-    getAllUsers();
+    onMounted(() => {
+      getAllUsers();
+    });
     return {
       users: computed(() => state.userList.value),
-      deleteUserFromList
+      dataLoaded,
+      deleteUserFromList,
     };
-  }
+  },
 };
 </script>

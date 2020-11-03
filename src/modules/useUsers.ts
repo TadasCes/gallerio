@@ -1,7 +1,5 @@
-import { computed, Ref, ref, toRef } from "vue";
-import { IUser } from "../models/IUser";
-import state from "../state";
-import axios, { AxiosResponse } from "axios";
+import { IUser } from '../models/IUser';
+import state from '../state';
 
 export default function useUsers() {
   function addUser(user: IUser) {
@@ -9,15 +7,8 @@ export default function useUsers() {
     console.log(state.userList.value);
   }
 
-  function deleteUser(id: number) {
-    const user = state.userList.value.find((user) => user.id == id);
-    user != undefined
-      ? state.userList.value.splice(state.userList.value.indexOf(user), 1)
-      : console.log("No user");
-  }
-
   return {
     addUser,
-    deleteUser
+    // deleteUser
   };
 }

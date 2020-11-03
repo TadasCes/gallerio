@@ -23,7 +23,7 @@
         </th>
         <th scope="col">
           Country
-          <i class="material-icons" @click="alio">arrow_drop_down</i>
+          <i class="material-icons">arrow_drop_down</i>
         </th>
         <th scope="col">
           City
@@ -45,37 +45,38 @@
 </template>
 
 <script lang="ts">
-import { computed, ComputedRef, onMounted, Ref, ref, watch } from "vue";
-import UserRow from "./UserRow.vue";
-import useUsersTable from "@/modules/useUsersTable";
-import { IUser } from "../models/IUser";
-import state from "@/state";
+import { computed, ComputedRef, onMounted, Ref, ref, watch } from 'vue';
+import UserRow from './UserRow.vue';
+import useUsersTable from '@/modules/useUsersTable';
+import { IUser } from '../models/IUser';
+import state from '@/state';
+import { IAddress } from '@/models/IAddress';
 
 export default {
-  emits: ["delete-user"],
+  emits: ['delete-user'],
   components: {
-    UserRow
+    UserRow,
   },
   props: {
     users: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props: any, { emit }: any) {
     const {
       useSortByName,
       useSortByAge,
       useSortByEmail,
-      useSearchUser
+      useSearchUser,
     } = useUsersTable();
 
     const userList: ComputedRef<IUser[]> = computed(() => props.users);
     let displayedList: Ref<IUser[]> = ref([]);
 
-    const searchString = ref("");
+    const searchString = ref('');
     const isSearching = () => {
-      return searchString.value !== "" ? true : false;
+      return searchString.value !== '' ? true : false;
     };
 
     watch(userList.value, () => {
@@ -97,20 +98,31 @@ export default {
     }
 
     function deleteUser(id: number) {
-      emit("delete-user", id);
-      searchString.value = "";
-    }
-
-    function alio() {
-      console.log(state.userList.value);
+      emit('delete-user', id);
+      searchString.value = '';
     }
 
     onMounted(() => {
       displayedList.value = userList.value;
+      const userAddress: IAddress = {
+        country: '',
+        city: '',
+        streetAddress: '',
+        zipCode: 0,
+      };
+
+      state.userForm = {
+        name: '',
+        lastName: '',
+        email: '',
+        password: '',
+        age: 0,
+        website: '',
+        address: userAddress,
+      };
     });
 
     return {
-      alio,
       sortByName,
       sortByAge,
       sortByEmail,
@@ -118,8 +130,8 @@ export default {
       userList,
       searchString,
       searchUser,
-      displayedList
+      displayedList,
     };
-  }
+  },
 };
 </script>

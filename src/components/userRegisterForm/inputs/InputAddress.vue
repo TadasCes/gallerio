@@ -9,7 +9,11 @@
       required
     />
     <ul v-show="isOpen" class="suggestion-box">
-      <li v-for="(result, i) in suggestions" :key="i" @click="selectAnAddress(result)">
+      <li
+        v-for="(result, i) in suggestions"
+        :key="i"
+        @click="selectAnAddress(result)"
+      >
         {{ result }}
       </li>
     </ul>
@@ -18,48 +22,48 @@
       <span class="error-message"></span>
     </div>
     <div v-else class="padding-05">
-      <span v-for="error in errors" :key="error" class="error-message">{{ error }}</span>
+      <span v-for="error in errors" :key="error" class="error-message">{{
+        error
+      }}</span>
     </div>
   </div>
 </template>
 <style scoped></style>
 
 <script lang="ts">
-import useInputValidator from "../../../modules/useInputValidator";
-import { minLength, maxLength, required } from "@/validators";
-import { onMounted, Ref, ref, watch } from "vue";
-import state from "@/state";
-import useInputErrors from "@/modules/useInputErrors";
-import addresses from "../../../assets/addresses.json";
-import { IAddress } from "@/models/IAddress";
+import useInputValidator from '../../../modules/useInputValidator';
+import { minLength, maxLength, required } from '@/validators';
+import { onMounted, Ref, ref, watch } from 'vue';
+import state from '@/state';
+import useInputErrors from '@/modules/useInputErrors';
+import addresses from '../../../assets/addresses.json';
+import { IAddress } from '@/models/IAddress';
 
 export default {
-  emits: ["input"],
-  props: {
-    value: String
-  },
-  setup(props: any, { emit }: any) {
-    const componentName = "InputStreetAddress";
+  setup() {
+    const componentName = 'InputStreetAddress';
 
     const errors: Ref<Array<string | null>> = ref([]);
     const validators = [minLength(3), maxLength(30)];
     const { addError } = useInputErrors();
-    const input = ref("");
+    const input: Ref<string> = ref(state.userForm.address.streetAddress);
     const suggestions: Ref<string[]> = ref([]);
     const addressList = addresses;
     const isOpen = ref(false);
 
     function doesHaveErrors(errorList: Array<string | null>) {
-      errorList.forEach((error) => {
+      errorList.forEach(error => {
         if (error !== null) addError(componentName, error);
       });
     }
 
     function autocompleteAddress(searchString: string) {
       suggestions.value = [];
-      addresses.filter((address) => {
+      addresses.filter(address => {
         if (
-          address.streetAddress.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
+          address.streetAddress
+            .toLowerCase()
+            .indexOf(searchString.toLowerCase()) !== -1
         ) {
           suggestions.value.push(address.streetAddress);
         }
@@ -67,12 +71,12 @@ export default {
     }
 
     function selectAnAddress(address: string) {
-      input.value = address
-      isOpen.value = false
+      input.value = address;
+      isOpen.value = false;
     }
 
     function onChange() {
-      if (input.value !== "") {
+      if (input.value !== '') {
         isOpen.value = true;
       } else {
         isOpen.value = false;
@@ -80,9 +84,9 @@ export default {
       autocompleteAddress(input.value);
     }
 
-    watch(state.isFormSubmitTriggered, (triggered) => {
+    watch(state.isFormSubmitTriggered, () => {
       errors.value == null;
-      errors.value = validators.map((validator) => validator(input.value));
+      errors.value = validators.map(validator => validator(input.value));
       doesHaveErrors(errors.value);
       if (state.errorList.value.length === 0) {
         state.userForm.address.streetAddress = input.value;
@@ -95,8 +99,8 @@ export default {
       suggestions,
       isOpen,
       onChange,
-      selectAnAddress
+      selectAnAddress,
     };
-  }
+  },
 };
 </script>

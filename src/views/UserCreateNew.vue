@@ -12,18 +12,14 @@ hr {
 </style>
 
 <script lang="ts">
-import { computed, reactive, ref, watch } from "vue";
-import RegistrationForm from "../components/userRegisterForm/RegistrationForm.vue"
+import RegistrationForm from '../components/userRegisterForm/RegistrationForm.vue';
 
 export default {
   components: {
-    RegistrationForm
+    RegistrationForm,
   },
   setup() {
-   
-    return {
-      
-    };
-  }
+    return {};
+  },
 };
 </script>

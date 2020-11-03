@@ -11,7 +11,9 @@
       <span class="error-message"></span>
     </div>
     <div v-else class="padding-05">
-      <span v-for="error in errors" :key="error" class="error-message">{{ error }}</span>
+      <span v-for="error in errors" :key="error" class="error-message">{{
+        error
+      }}</span>
     </div>
   </div>
 </template>
@@ -19,34 +21,32 @@
 <style scoped></style>
 
 <script lang="ts">
-import useInputValidator from "../../../modules/useInputValidator";
-import { minNumber, maxNumber } from "@/validators";
-import { Ref, ref, watch } from "vue";
-import state from "@/state";
-import useInputErrors from "@/modules/useInputErrors";
+import useInputValidator from '../../../modules/useInputValidator';
+import { minNumber, maxNumber } from '@/validators';
+import { Ref, ref, watch } from 'vue';
+import state from '@/state';
+import useInputErrors from '@/modules/useInputErrors';
 
 export default {
-  emits: ["input"],
-  props: {
-    value: String
-  },
-  setup(props: any, { emit }: any) {
-    const componentName = "InputAge";
+  setup() {
+    const componentName = 'InputAge';
     const errors: Ref<Array<string | null>> = ref([]);
     const validators = [maxNumber(100), minNumber(3)];
     const { addError } = useInputErrors();
     const input = ref(0);
 
     function doesHaveErrors(errorList: Array<string | null>) {
-      errorList.forEach((error) => {
+      errorList.forEach(error => {
         if (error !== null) addError(componentName, error);
       });
     }
 
-    watch(state.isFormSubmitTriggered, (triggered) => {
+    watch(state.isFormSubmitTriggered, () => {
       if (input.value !== null) {
         errors.value == null;
-        errors.value = validators.map((validator) => validator(input.value));
+        if (input.value > 0) {
+          errors.value = validators.map(validator => validator(input.value));
+        }
         doesHaveErrors(errors.value);
         if (state.errorList.value.length === 0) {
           state.userForm.age = input.value;
@@ -56,8 +56,8 @@ export default {
 
     return {
       input,
-      errors
+      errors,
     };
-  }
+  },
 };
 </script>

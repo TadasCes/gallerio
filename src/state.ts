@@ -1,13 +1,12 @@
-import { computed, reactive, Ref, ref } from "vue";
-import { IAddress } from "./models/IAddress";
-import { IError } from "./models/IError";
-import { IUser } from "./models/IUser";
-import useUsers from "./modules/useUsers";
+import { computed, reactive, Ref, ref } from 'vue';
+import { IAddress } from './models/IAddress';
+import { IError } from './models/IError';
+import { IUser } from './models/IUser';
 
 // Registration (useRegistration, inputs, RegistraionForm)
 const registrationState = reactive({
   submitTriggered: false,
-  hasErrors: true
+  hasErrors: true,
 });
 
 const isFormSubmitTriggered = computed(() => registrationState.submitTriggered);
@@ -17,25 +16,35 @@ const toggleTriggered = () => {
 
 // Define user fields
 const userAddress: IAddress = {
-  country: "",
-  city: "",
-  streetAddress: "",
-  zipCode: 0
+  country: '',
+  city: '',
+  streetAddress: '',
+  zipCode: 0,
 };
 
 const userForm: IUser = {
-  name: "",
-  lastName: "",
-  email: "",
-  password: "",
+  name: '',
+  lastName: '',
+  email: '',
+  password: '',
   age: 0,
-  website: "",
-  address: userAddress
+  website: '',
+  address: userAddress,
 };
+
+// const userFormClear: IUser = {
+//   name: '',
+//   lastName: '',
+//   email: '',
+//   password: '',
+//   age: 0,
+//   website: '',
+//   address: userAddress,
+// };
 
 // User list
 
-const userList: Ref<any[]> = ref([]);
+const userList: Ref<IUser[]> = ref([]);
 
 // Errors
 const errorList: Ref<IError[]> = ref([]);
@@ -52,7 +61,7 @@ const state = {
   toggleHasErrors,
   errorList,
   userForm,
-  userList
+  userList,
 };
 
 export default state;

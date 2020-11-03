@@ -1,5 +1,5 @@
-import { computed, ComputedRef, reactive, Ref, ref } from "vue";
-import { IUser } from "../models/IUser";
+import { ComputedRef, Ref, ref } from 'vue';
+import { IUser } from '../models/IUser';
 
 export default function useUsersTable() {
   const searchResult: Ref<IUser[]> = ref([]);
@@ -54,7 +54,7 @@ export default function useUsersTable() {
 
   function useSearchUser(userList: ComputedRef<IUser[]>, searchString: string) {
     searchResult.value = [];
-    userList.value.filter((user) => {
+    userList.value.filter(user => {
       if (user.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
         searchResult.value.push(user);
       }
@@ -67,6 +67,6 @@ export default function useUsersTable() {
     useSortByName,
     useSortByAge,
     useSortByEmail,
-    useSearchUser
+    useSearchUser,
   };
 }
