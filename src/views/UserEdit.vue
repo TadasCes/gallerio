@@ -144,7 +144,6 @@ export default {
       city.value = state.userForm.address.city;
       zip.value = state.userForm.address.zipCode;
       dataLoaded.value = true;
-      console.log(name.value);
     });
 
     onUnmounted(() => {

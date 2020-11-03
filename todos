@@ -1,15 +1,15 @@
 Todo's: 
 
   Sutvarkyt:
-    * Sutvarkyt warnings [DONE]
+    * [DONE] Sutvarkyt warnings 
     * Sutvarkyt password
-    * Pabaigt edit page, kad gautu nrml informacija ir ja issiustu i serveri on submit [DONE]
-    * Padaryt, kad age butu optional [DONE]
-    * Country required pasirinkt [DONE]
-    * User Table rodytu daugiau informacijos [DONE]
+    * [DONE] Pabaigt edit page, kad gautu nrml informacija ir ja issiustu i serveri on submit 
+    * [DONE] Padaryt, kad age butu optional 
+    * [DONE] Country required pasirinkt 
+    * [DONE] User Table rodytu daugiau informacijos 
     
   Nauja:
-    * Padaryt delete funkcionaluma [DONE]
+    * [DONE] Padaryt delete funkcionaluma
     * Padaryt login puslapi
     * Register puslapi
     * Padaryt forget password funkcija

@@ -21,7 +21,6 @@
 <style scoped></style>
 
 <script lang="ts">
-import useInputValidator from '../../../modules/useInputValidator';
 import { minNumber, maxNumber } from '@/validators';
 import { Ref, ref, watch } from 'vue';
 import state from '@/state';
@@ -33,7 +32,7 @@ export default {
     const errors: Ref<Array<string | null>> = ref([]);
     const validators = [maxNumber(100), minNumber(3)];
     const { addError } = useInputErrors();
-    const input = ref(0);
+    const input = ref(state.userForm.age);
 
     function doesHaveErrors(errorList: Array<string | null>) {
       errorList.forEach(error => {

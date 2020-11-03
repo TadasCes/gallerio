@@ -1,7 +1,15 @@
 <template>
   <div class="user-register-form mt-3">
-    <h3>Create new User</h3>
-    <RegistrationForm></RegistrationForm>
+    <div class="container w-50">
+      <router-link to="/users">
+        <button class="btn btn-outline-primary mr-5 float-left ">
+          <i class="material-icons align-middle">arrow_back</i>
+          Back
+        </button>
+      </router-link>
+      <h3 class="d-inline align-middle">Create new User</h3>
+    </div>
+    <NewUserForm></NewUserForm>
   </div>
 </template>
 
@@ -12,11 +20,11 @@ hr {
 </style>
 
 <script lang="ts">
-import RegistrationForm from '../components/userRegisterForm/RegistrationForm.vue';
+import NewUserForm from '../components/userRegisterForm/NewUserForm.vue';
 
 export default {
   components: {
-    RegistrationForm,
+    NewUserForm,
   },
   setup() {
     return {};

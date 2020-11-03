@@ -1,7 +1,6 @@
 <template>
   <form class="container register-form">
     <hr />
-
     <div class="row ">
       <div class="col-md-6 ">
         <InputName></InputName>
@@ -55,9 +54,6 @@
       <button @click.prevent="clearForm" class="btn btn-outline-primary mr-3">
         Reset
       </button>
-      <router-link to="/users">
-        <button class="btn btn-outline-primary mr-3">Back</button>
-      </router-link>
     </div>
   </form>
 </template>

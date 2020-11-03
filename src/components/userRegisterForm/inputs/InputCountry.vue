@@ -28,7 +28,7 @@ import { ref, watch } from 'vue';
 export default {
   setup() {
     const countryList = ref(countries);
-    const selectedCountry = ref('');
+    const selectedCountry = ref(state.userForm.address.country);
 
     watch(state.isFormSubmitTriggered, () => {
       console.log(selectedCountry.value);

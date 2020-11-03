@@ -1,3 +1,13 @@
+const errorsFound = (errorList: Array<string | null>) => {
+  let unresolved = 0
+  errorList.forEach(error => {
+    if (error !== null) {
+      unresolved++
+    }
+  });
+  return unresolved > 0 ? true : false
+}
+
 const required = () => {
   return (input: string) =>
     input.length === 0 ? `Field is required  \t` : null;
@@ -60,6 +70,7 @@ const samePasswords = (password: string) => {
 };
 
 export {
+  errorsFound,
   minLength,
   maxLength,
   required,

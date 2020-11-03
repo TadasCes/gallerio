@@ -20,16 +20,14 @@
 <script lang="ts">
 import useUserService from '@/modules/useUserService';
 import router from '@/router';
-import { IUser } from '@/models/IUser';
 
 export default {
   emits: ['delete-user'],
-  setup(
-    props: {
-      user: IUser;
-    },
-    { emit }: any
-  ) {
+  props: {
+    user: Object,
+  },
+  // eslint-disable-next-line
+  setup(props: any, { emit }: any) {
     const { fetchOneUser } = useUserService();
     function deleteUser() {
       emit('delete-user', props.user.name);
