@@ -2,6 +2,7 @@
   <div class="input-box">
     <label for="password" class="label-bold">Repeat password</label>
     <input
+      type="password"
       v-model="input"
       name="password"
       class="input-field border-rounded bg-light-gray"
@@ -30,7 +31,7 @@ export default {
   setup() {
     const componentName = 'InputPasswordRepeat';
     const errors: Ref<Array<string | null>> = ref([]);
-    const validators = [samePasswords(state.userForm.password), required()];
+    const validators = [required()];
     const { addError } = useInputErrors();
     const input: Ref<string> = ref(state.userForm.password);
 

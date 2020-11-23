@@ -142,8 +142,9 @@ export default {
         } else {
           addUser(state.userForm);
           console.log(state.userForm);
-          postUser();
-          router.push('/users');
+          postUser().then(() => {
+            router.push('/users');
+          });
         }
       }, 1000);
     }

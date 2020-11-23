@@ -59,7 +59,6 @@ export default function useUsersTable() {
         searchResult.value.push(user);
       }
     });
-    console.log(searchResult.value);
     return searchResult.value;
   }
 

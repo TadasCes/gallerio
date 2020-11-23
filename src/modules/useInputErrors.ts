@@ -5,7 +5,18 @@ export default function useInputErrors() {
     state.errorList.value.push({ component, error });
   };
 
+  const errorsFound = (errorList: Array<string | null>) => {
+    let found = false
+    errorList.forEach(error => {
+      if (error != null) {
+        found = true
+      }
+    });
+    return found
+  }
+
   return {
     addError,
+    errorsFound
   };
 }

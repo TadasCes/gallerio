@@ -1,5 +1,7 @@
 import state from '../state';
 import axios from 'axios';
+import useApi from './api';
+import { ErrorCodes } from 'vue';
 
 export default function useUserService() {
   async function fetchAllUsers() {
@@ -10,6 +12,7 @@ export default function useUserService() {
         return true;
       })
       .catch(() => {
+
         console.log('No users created');
         return false;
       });
@@ -26,14 +29,22 @@ export default function useUserService() {
       });
   }
 
-  async function postUser() {
-    await axios
-      .post('http://localhost:3000/users', state.userForm)
+  async function postUser(): Promise<ErrorCodes> {
+    return await axios
+      .post('http://localhost:3000/users/register', state.userForm)
       .then(() => {
-        console.log('User created successfully');
+        console.log('User created successfully')
+        return 200;
       })
-      .catch(() => {
-        console.log('Error happend');
+      .catch(error => {
+        switch (error.response.status) {
+          case 401:
+              return 401
+          case 404:
+              return 404
+          default:
+              return 400
+          }
       });
   }
 

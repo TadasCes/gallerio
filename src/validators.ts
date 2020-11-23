@@ -1,3 +1,5 @@
+import state from './state';
+
 const errorsFound = (errorList: Array<string | null>) => {
   let unresolved = 0
   errorList.forEach(error => {
@@ -64,9 +66,9 @@ const email = () => {
       : null;
 };
 
-const samePasswords = (password: string) => {
+const samePasswords = () => {
   return (input: string) =>
-    input == password ? `Passwords must match  \t` : null;
+    input != state.userForm.password ? `Passwords must match  \t` : null;
 };
 
 export {

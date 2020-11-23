@@ -2,6 +2,7 @@
   <div class="input-box">
     <label for="password" class="label-bold">Password</label>
     <input
+      type="password"
       v-model="input"
       name="password"
       class="input-field border-rounded bg-light-gray"

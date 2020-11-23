@@ -9,11 +9,7 @@
           Add new user
         </h1>
       </router-link>
-      <UserTable
-        v-if="dataLoaded == true"
-        :users="users"
-        @delete-user="deleteUserFromList"
-      >
+      <UserTable v-if="dataLoaded == true" :users="users" @delete-user="deleteUserFromList">
       </UserTable>
     </div>
   </div>
@@ -26,7 +22,7 @@ import UserTable from '@/components/UserTable.vue';
 import { computed, onMounted, reactive, ref } from 'vue';
 import useUserService from '../modules/useUserService';
 import state from '../state';
-import Menu from '@/components/Menu.vue'; // @ is an alias to /src
+import Menu from '@/components/Menu.vue';
 
 export default {
   components: {
@@ -40,14 +36,15 @@ export default {
       userList: state.userList,
     });
 
-    async function deleteUserFromList(name: string) {
-      await deleteUser(name);
-    }
-
     async function getAllUsers() {
       await fetchAllUsers();
       users.userList = state.userList.value;
       dataLoaded.value = true;
+    }
+    
+    async function deleteUserFromList(name: string) {
+      await deleteUser(name);
+      getAllUsers();
     }
 
     onMounted(() => {
